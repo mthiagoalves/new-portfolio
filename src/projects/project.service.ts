@@ -7,7 +7,7 @@ export class ProjectService {
   projects: Project[] = [];
 
   findAll() {
-    return 'Get all projects';
+    return this.projects;
   }
 
   create(createProjectDto:CreateProjectDto) {
