@@ -1,3 +1,4 @@
 export class CreateProjectDto{
-  title: string
+  title: string;
+  description: string
 }

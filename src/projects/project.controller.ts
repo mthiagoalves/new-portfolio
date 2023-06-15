@@ -5,6 +5,7 @@ import { CreateProjectDto } from "./dto/create-project.dto";
 @Controller('project')
 export class ProjectController{
 constructor(private readonly projectService: ProjectService){}
+
   @Get()
   findAll() {
     return this.projectService.findAll();
