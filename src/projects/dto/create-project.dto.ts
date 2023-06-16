@@ -12,8 +12,15 @@ export class CreateProjectDto{
 
   @IsString()
   @ApiProperty({
+    description: 'A little description of the project',
+    example: 'Project created for Covet Group...'
+  })
+  smallDescription: string
+
+  @IsString()
+  @ApiProperty({
     description: 'Description of the project',
-    example: 'Project created for Covet Group.'
+    example: 'Project created for Covet Group, where i make a backoffice using Laravel with...'
   })
   description: string
 

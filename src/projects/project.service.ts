@@ -7,11 +7,11 @@ import { PrismaService } from "src/prisma/prisma.service";
 export class ProjectService {
   constructor(private readonly prisma:PrismaService) {}
 
-  findAll() {
+  findAll(): Promise<Project[]> {
     return this.prisma.project.findMany();
   }
 
-  create(dto:CreateProjectDto) {
+  create(dto:CreateProjectDto): Promise<Project> {
 
     const data: Project = {...dto}
 

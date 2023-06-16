@@ -7,12 +7,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Project{
-  id String @id @default(uuid())
-  title String @unique
-  description String
-  order Int
+model Project {
+  id               String @id @default(uuid())
+  title            String @unique
+  smallDescription String
+  description      String
+  order            Int
 
   createdAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  updateAt  DateTime @updatedAt
 }
