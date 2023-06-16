@@ -11,6 +11,10 @@ export class ProjectService {
     return this.prisma.project.findMany();
   }
 
+  findOne(id: string): Promise<Project> {
+    return this.prisma.project.findUnique({ where: { id }});
+  }
+
   create(dto:CreateProjectDto): Promise<Project> {
 
     const data: Project = {...dto}

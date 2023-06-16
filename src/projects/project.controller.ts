@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { ProjectService } from "./project.service";
 import { CreateProjectDto } from "./dto/create-project.dto";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { Project } from "./entity/project.entity";
 
 @ApiTags('Projects')
@@ -10,14 +10,25 @@ export class ProjectController{
 constructor(private readonly projectService: ProjectService){}
 
   @Get()
+  @ApiOperation({
+    summary: 'Get all projects'
+  })
   findAll(): Promise<Project[]> {
     return this.projectService.findAll();
   }
 
-  @Get()
-  
+  @Get(':id')
+  @ApiOperation({
+    summary: 'Find a specific project'
+  })
+  findOne(@Param('id') id:string): Promise<Project>{
+    return this.projectService.findOne(id);
+  }
 
   @Post()
+  @ApiOperation({
+    summary: 'Create a new project'
+  })
   create(@Body() dto:CreateProjectDto): Promise<Project> {
     return this.projectService.create(dto);
   }
