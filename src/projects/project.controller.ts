@@ -14,7 +14,7 @@ constructor(private readonly projectService: ProjectService){}
   }
 
   @Post()
-  create(@Body() createProjectDto:CreateProjectDto) {
-    return this.projectService.create(createProjectDto);
+  create(@Body() dto:CreateProjectDto) {
+    return this.projectService.create(dto);
   }
 }

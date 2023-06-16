@@ -1,21 +1,20 @@
 import { Injectable } from "@nestjs/common";
 import { CreateProjectDto } from "./dto/create-project.dto";
 import { Project } from "./entity/project.entity";
+import { PrismaService } from "src/prisma/prisma.service";
 
 @Injectable()
 export class ProjectService {
-  projects: Project[] = [];
+  constructor(private readonly prisma:PrismaService) {}
 
   findAll() {
-    return this.projects;
+    return this.prisma.project.findMany();
   }
 
-  create(createProjectDto:CreateProjectDto) {
+  create(dto:CreateProjectDto) {
 
-    const project: Project = {id: 'random_id', ...createProjectDto}
+    const data: Project = {...dto}
 
-    this.projects.push(project);
-
-    return project;
+    return this.prisma.project.create({ data });
   }
 }
