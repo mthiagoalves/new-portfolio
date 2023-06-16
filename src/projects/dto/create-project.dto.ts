@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString } from "class-validator";
+import { IsString, IsNumber, IsPositive } from "class-validator";
 
 export class CreateProjectDto{
 
@@ -16,4 +16,12 @@ export class CreateProjectDto{
     example: 'Project created for Covet Group.'
   })
   description: string
+
+  @IsNumber()
+  @IsPositive()
+  @ApiProperty({
+    description: 'Order to project',
+    example: '1'
+  })
+  order: number
 }
