@@ -12,15 +12,15 @@ export class TechnologyService {
     return `This action returns all technology`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} technology`;
   }
 
-  update(id: number, updateTechnologyDto: UpdateTechnologyDto) {
+  update(id: string, updateTechnologyDto: UpdateTechnologyDto) {
     return `This action updates a #${id} technology`;
   }
 
-  remove(id: number) {
+  delete(id: string) {
     return `This action removes a #${id} technology`;
   }
 }
