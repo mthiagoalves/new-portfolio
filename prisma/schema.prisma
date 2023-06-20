@@ -14,6 +14,29 @@ model Project {
   description      String
   order            Int
 
-  createdAt DateTime @default(now())
-  updateAt  DateTime @updatedAt
+  createdAt DateTime @default(now())  @map("created_at")
+  updateAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("project")
+}
+
+model Technologies {
+  id               String @id @default(uuid())
+  name             String @unique
+
+  createdAt DateTime @default(now())  @map("created_at")
+  updateAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("technologies")
+}
+
+model User {
+  id               String @id @default(uuid())
+  name             String @unique
+  password         String
+
+  createdAt DateTime @default(now())  @map("created_at")
+  updateAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("user")
 }
