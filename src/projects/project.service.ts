@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { NotFoundException } from "@nestjs/common/exceptions";
 import { CreateProjectDto } from "./dto/create-project.dto";
 import { Project } from "./entity/project.entity";
 import { PrismaService } from "src/prisma/prisma.service";
@@ -12,8 +13,14 @@ export class ProjectService {
     return this.prisma.project.findMany();
   }
 
-  findOne(id: string): Promise<Project> {
-    return this.prisma.project.findUnique({ where: { id }});
+  async findOne(id: string): Promise<Project> {
+    const record = await this.prisma.project.findUnique({ where: { id }});
+
+    if(!record) {
+      throw new NotFoundException(`Project id '${id}' is not found`);
+    }
+
+    return record;
   }
 
   create(dto:CreateProjectDto): Promise<Project> {
