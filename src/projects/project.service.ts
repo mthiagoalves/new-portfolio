@@ -10,11 +10,23 @@ export class ProjectService {
   constructor(private readonly prisma:PrismaService) {}
 
   findAll(): Promise<Project[]> {
-    return this.prisma.project.findMany();
+    return this.prisma.project.findMany({
+      include: {
+        technologies: { select: {
+          name: true
+        }}
+      }
+    });
   }
 
   async findById(id: string ): Promise<Project>  {
-    const record = await this.prisma.project.findUnique({ where: { id }});
+    const record = await this.prisma.project.findUnique({
+      where: { id },
+      include: {
+        technologies: { select: {
+          name: true
+        }}
+      }});
 
     if(!record) {
       throw new NotFoundException(`Project id '${id}' is not found`);
@@ -31,7 +43,14 @@ export class ProjectService {
 
     const data: Project = {...dto}
 
-    return this.prisma.project.create({ data }).catch(this.handleError);
+    return this.prisma.project.create({
+      data,
+      include: {
+        technologies: { select: {
+          name: true
+        }}
+      }
+    }).catch(this.handleError);
   }
 
   async update(id: string, dto: UpdateUpdateDto): Promise<Project> {
@@ -41,7 +60,12 @@ export class ProjectService {
 
     return this.prisma.project.update({
       where: { id },
-      data
+      data,
+      include: {
+        technologies: { select: {
+          name: true
+        }}
+      }
     }).catch(this.handleError);
   }
 

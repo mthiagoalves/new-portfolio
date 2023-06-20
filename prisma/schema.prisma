@@ -17,6 +17,8 @@ model Project {
   createdAt DateTime @default(now())  @map("created_at")
   updateAt  DateTime @updatedAt @map("updated_at")
 
+  technologies Technologies[]
+
   @@map("project")
 }
 
@@ -26,6 +28,8 @@ model Technologies {
 
   createdAt DateTime @default(now())  @map("created_at")
   updateAt  DateTime @updatedAt @map("updated_at")
+
+  projects Project[]
 
   @@map("technologies")
 }
