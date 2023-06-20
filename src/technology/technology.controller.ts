@@ -4,18 +4,10 @@ import { CreateTechnologyDto } from './dto/create-technology.dto';
 import { UpdateTechnologyDto } from './dto/update-technology.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Technology')
+@ApiTags('Technologies')
 @Controller('technology')
 export class TechnologyController {
   constructor(private readonly technologyService: TechnologyService) {}
-
-  @Post()
-  @ApiOperation({
-    summary: 'Add new technology'
-  })
-  create(@Body() createTechnologyDto: CreateTechnologyDto) {
-    return this.technologyService.create(createTechnologyDto);
-  }
 
   @Get()
   @ApiOperation({
@@ -31,6 +23,14 @@ export class TechnologyController {
   })
   findOne(@Param('id') id: string) {
     return this.technologyService.findOne(id);
+  }
+
+  @Post()
+  @ApiOperation({
+    summary: 'Add new technology'
+  })
+  create(@Body() createTechnologyDto: CreateTechnologyDto) {
+    return this.technologyService.create(createTechnologyDto);
   }
 
   @Patch(':id')
