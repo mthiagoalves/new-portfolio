@@ -13,9 +13,11 @@ async function bootstrap() {
   .setDescription('Application maked for build my portfolio')
   .setVersion('1.0.0')
   .addTag('Status')
+  .addTag('Auth')
   .addTag('Users')
   .addTag('Projects')
   .addTag('Technologies')
+  .addBearerAuth()
   .build();
 
 const document = SwaggerModule.createDocument(app, config);
