@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Post, Delete, HttpCode, HttpStatus } from "@nestjs/common";
 import { ProjectService } from "./project.service";
 import { CreateProjectDto } from "./dto/create-project.dto";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
@@ -40,5 +40,14 @@ constructor(private readonly projectService: ProjectService){}
   })
   update(@Param('id') id: string, @Body() dto: UpdateUpdateDto): Promise<Project> {
     return this.projectService.update(id, dto);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({
+    summary: 'Delete a specific project'
+  })
+  delete(@Param('id') id: string) {
+    this.projectService.delete(id);
   }
 }
