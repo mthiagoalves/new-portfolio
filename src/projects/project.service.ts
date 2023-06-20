@@ -13,7 +13,7 @@ export class ProjectService {
     return this.prisma.project.findMany();
   }
 
-  async findOne(id: string): Promise<Project> {
+  async findById(id: string ): Promise<Project>  {
     const record = await this.prisma.project.findUnique({ where: { id }});
 
     if(!record) {
@@ -23,6 +23,10 @@ export class ProjectService {
     return record;
   }
 
+  async findOne(id: string): Promise<Project> {
+    return this.findById(id);
+  }
+
   create(dto:CreateProjectDto): Promise<Project> {
 
     const data: Project = {...dto}
@@ -30,7 +34,9 @@ export class ProjectService {
     return this.prisma.project.create({ data });
   }
 
-  update(id: string, dto: UpdateUpdateDto): Promise<Project> {
+  async update(id: string, dto: UpdateUpdateDto): Promise<Project> {
+    await this.findById(id);
+
     const data: Partial<Project> = {...dto}
 
     return this.prisma.project.update({
@@ -40,6 +46,8 @@ export class ProjectService {
   }
 
   async delete(id: string){
+    await this.findById(id);
+    
     await this.prisma.project.delete({ where: {id} });
   }
 }
