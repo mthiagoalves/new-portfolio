@@ -1,10 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
 import { TechnologiesService } from './technologies.service';
 import { CreateTechnologiesDto } from './dto/create-technologies.dto';
 import { UpdateTechnologiesDto } from './dto/update-technologies.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Technologies')
+@UseGuards(AuthGuard())
+@ApiBearerAuth()
 @Controller('technologies')
 export class TechnologiesController {
   constructor(private readonly technologiesService: TechnologiesService) {}
