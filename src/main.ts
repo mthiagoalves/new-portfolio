@@ -4,7 +4,11 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    cors: {
+      origin: ['http://127.0.0.1:5500', 'http://localhost:5500']
+    }
+  });
 
   app.useGlobalPipes(new ValidationPipe());
 
