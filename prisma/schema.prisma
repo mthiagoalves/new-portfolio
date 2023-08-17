@@ -3,13 +3,14 @@ generator client {
 }
 
 datasource db {
-  provider = "postgres"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 model Project {
   id               String @id @default(uuid())
   title            String @unique
+  slug             String
   smallDescription String
   description      String
   order            Int
@@ -24,7 +25,9 @@ model Project {
 
 model Technologies {
   id               String @id @default(uuid())
-  name             String @unique
+  name             String 
+  slug             String @unique
+  level            String
 
   createdAt DateTime @default(now())  @map("created_at")
   updateAt  DateTime @updatedAt @map("updated_at")

@@ -8,7 +8,14 @@ export class CreateProjectDto{
     description: 'Title of the project',
     example: 'Backoffice'
   })
-  title: string;
+  title: string
+
+  @IsString()
+  @ApiProperty({
+    description: 'Slug of the project',
+    example: 'backoffice'
+  })
+  slug: string
 
   @IsString()
   @ApiProperty({

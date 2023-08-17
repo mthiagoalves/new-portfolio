@@ -8,4 +8,18 @@ export class CreateTechnologiesDto {
     example: 'JavaScript'
   })
   name: string
+
+  @IsString()
+  @ApiProperty({
+    description: 'Slug of technology',
+    example: 'javascript'
+  })
+  slug: string
+
+  @IsString()
+  @ApiProperty({
+    description: 'Knowledges this technology',
+    example: 'Advanced'
+  })
+  level: string
 }
