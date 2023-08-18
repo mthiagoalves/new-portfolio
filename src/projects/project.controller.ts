@@ -7,8 +7,6 @@ import { UpdateUpdateDto } from "./dto/update-project.dto";
 import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Projects')
-@UseGuards(AuthGuard())
-@ApiBearerAuth()
 @Controller('project')
 export class ProjectController{
 constructor(private readonly projectService: ProjectService){}
@@ -25,6 +23,8 @@ constructor(private readonly projectService: ProjectService){}
   @ApiOperation({
     summary: 'Find a specific project'
   })
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   findOne(@Param('id') id:string): Promise<Project>{
     return this.projectService.findOne(id);
   }
@@ -33,6 +33,8 @@ constructor(private readonly projectService: ProjectService){}
   @ApiOperation({
     summary: 'Create a new project'
   })
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   create(@Body() dto:CreateProjectDto): Promise<Project> {
     return this.projectService.create(dto);
   }
@@ -41,6 +43,8 @@ constructor(private readonly projectService: ProjectService){}
   @ApiOperation({
     summary: 'Update a specific project'
   })
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   update(@Param('id') id: string, @Body() dto: UpdateUpdateDto): Promise<Project> {
     return this.projectService.update(id, dto);
   }
@@ -50,6 +54,8 @@ constructor(private readonly projectService: ProjectService){}
   @ApiOperation({
     summary: 'Delete a specific project'
   })
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   delete(@Param('id') id: string) {
     this.projectService.delete(id);
   }
