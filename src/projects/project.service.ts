@@ -7,28 +7,33 @@ import { UpdateUpdateDto } from "./dto/update-project.dto";
 
 @Injectable()
 export class ProjectService {
-  constructor(private readonly prisma:PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   findAll(): Promise<Project[]> {
     return this.prisma.project.findMany({
       include: {
-        technologies: { select: {
-          name: true
-        }}
+        technologies: {
+          select: {
+            name: true
+          }
+        }
       }
     });
   }
 
-  async findById(id: string ): Promise<Project>  {
+  async findById(id: string): Promise<Project> {
     const record = await this.prisma.project.findUnique({
       where: { id },
       include: {
-        technologies: { select: {
-          name: true
-        }}
-      }});
+        technologies: {
+          select: {
+            name: true
+          }
+        }
+      }
+    });
 
-    if(!record) {
+    if (!record) {
       throw new NotFoundException(`Project id '${id}' is not found`);
     }
 
@@ -39,43 +44,55 @@ export class ProjectService {
     return this.findById(id);
   }
 
-  create(dto:CreateProjectDto): Promise<Project> {
-
-    const data: Project = {...dto}
+  create(dto: CreateProjectDto): Promise<Project> {
+    const { technologies, ...projectData } = dto;
 
     return this.prisma.project.create({
-      data,
-      include: {
-        technologies: { select: {
-          name: true
-        }}
-      }
+      data: projectData,
+    }).then(async (project) => {
+      await this.prisma.project.update({
+        where: { id: project.id },
+        data: {
+          technologies: {
+            connect: technologies.map((techId) => ({ id: techId })),
+          },
+        },
+      });
+
+      return this.prisma.project.findUnique({
+        where: { id: project.id },
+        include: { technologies: true },
+      });
     }).catch(this.handleError);
   }
+
+
 
   async update(id: string, dto: UpdateUpdateDto): Promise<Project> {
     await this.findById(id);
 
-    const data: Partial<Project> = {...dto}
+    const data: Partial<Project> = { ...dto }
 
     return this.prisma.project.update({
       where: { id },
       data,
       include: {
-        technologies: { select: {
-          name: true
-        }}
+        technologies: {
+          select: {
+            name: true
+          }
+        }
       }
     }).catch(this.handleError);
   }
 
-  async delete(id: string){
+  async delete(id: string) {
     await this.findById(id);
 
-    await this.prisma.project.delete({ where: {id} });
+    await this.prisma.project.delete({ where: { id } });
   }
 
-  handleError (error: Error ): undefined {
+  handleError(error: Error): undefined {
     const errorLines = error.message?.split('\n');
     const lastErrorLine = errorLines[errorLines.length - 1]?.trim();
     throw new UnprocessableEntityException(lastErrorLine || 'Another error in operation');

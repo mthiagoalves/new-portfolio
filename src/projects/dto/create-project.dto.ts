@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsNumber, IsPositive } from "class-validator";
+import { IsString, IsNumber, IsPositive, IsArray } from "class-validator";
 
-export class CreateProjectDto{
+export class CreateProjectDto {
 
   @IsString()
   @ApiProperty({
@@ -38,4 +38,12 @@ export class CreateProjectDto{
     example: '1'
   })
   order: number
+
+  @IsArray()
+  @IsString() 
+  @ApiProperty({
+    description: 'Array of technology IDs associated with the project',
+    example: ['1', '2', '3']
+  })
+  technologies: string[];
 }
