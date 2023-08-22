@@ -40,7 +40,6 @@ export class CreateProjectDto {
   order: number
 
   @IsArray()
-  @IsString() 
   @ApiProperty({
     description: 'Array of technology IDs associated with the project',
     example: ['1', '2', '3']
