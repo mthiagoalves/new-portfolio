@@ -44,29 +44,20 @@ export class ProjectService {
     return this.findById(id);
   }
 
-  create(dto: CreateProjectDto): Promise<Project> {
+  async create(dto: CreateProjectDto): Promise<Project> {
     const { technologies, ...projectData } = dto;
 
-    return this.prisma.project.create({
+    const createdProject = await this.prisma.project.create({
       data: projectData,
-    }).then(async (project) => {
-      await this.prisma.project.update({
-        where: { id: project.id },
-        data: {
-          technologies: {
-            connect: technologies.map((techId) => ({ id: techId })),
-          },
-        },
-      });
+      include: {
+        technologies: {
+          select: { name: true }
+        }
+      },
+    });
 
-      return this.prisma.project.findUnique({
-        where: { id: project.id },
-        include: { technologies: true },
-      });
-    }).catch(this.handleError);
+    return createdProject;
   }
-
-
 
   async update(id: string, dto: UpdateUpdateDto): Promise<Project> {
     await this.findById(id);
