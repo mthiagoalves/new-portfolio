@@ -6,8 +6,6 @@ import { Project } from "./entity/project.entity";
 import { UpdateUpdateDto } from "./dto/update-project.dto";
 import { AuthGuard } from '@nestjs/passport';
 
-  @UseGuards(AuthGuard())
-  @ApiBearerAuth()
 @ApiTags('Projects')
 @Controller('project')
 export class ProjectController{
