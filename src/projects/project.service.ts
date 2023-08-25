@@ -17,7 +17,11 @@ export class ProjectService {
             name: true
           }
         }
+      },
+      orderBy: {
+        order: 'asc'
       }
+
     });
   }
 
