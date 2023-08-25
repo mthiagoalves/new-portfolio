@@ -5,6 +5,8 @@ import { UpdateTechnologiesDto } from './dto/update-technologies.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 
+@UseGuards(AuthGuard())
+@ApiBearerAuth()
 @ApiTags('Technologies')
 @Controller('technologies')
 export class TechnologiesController {
@@ -22,8 +24,6 @@ export class TechnologiesController {
   @ApiOperation({
     summary: 'Find specific technologies'
   })
-  @UseGuards(AuthGuard())
-  @ApiBearerAuth()
   findOne(@Param('id') id: string) {
     return this.technologiesService.findOne(id);
   }
