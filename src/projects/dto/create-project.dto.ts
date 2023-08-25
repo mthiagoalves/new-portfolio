@@ -31,6 +31,20 @@ export class CreateProjectDto {
   })
   description: string
 
+  @IsString()
+  @ApiProperty({
+    description: 'Link repository of the project',
+    example: 'https://github.com/mthiagoalves/project-repository'
+  })
+  repository: string
+
+  @IsString()
+  @ApiProperty({
+    description: 'Link deploy of the project',
+    example: ''
+  })
+  deploy: string
+
   @IsNumber()
   @IsPositive()
   @ApiProperty({

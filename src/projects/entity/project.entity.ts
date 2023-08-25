@@ -4,5 +4,7 @@ export class Project {
   slug: string;
   smallDescription: string;
   description: string;
+  repository: string;
+  deploy: string;
   order: number;
 }
