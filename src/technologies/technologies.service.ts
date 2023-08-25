@@ -10,7 +10,7 @@ export class TechnologiesService {
   constructor(private readonly prisma:PrismaService) {}
 
   findAll(): Promise<Technologies[]> {
-    return this.prisma.technologies.findMany();
+    return this.prisma.technologies.findMany({});
   }
 
   async findById(id: string ): Promise<Technologies>  {

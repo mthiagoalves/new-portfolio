@@ -30,6 +30,7 @@ model Technologies {
   name             String
   slug             String @unique
   level            String
+  order            Int
 
   createdAt DateTime @default(now())  @map("created_at")
   updateAt  DateTime @updatedAt @map("updated_at")
